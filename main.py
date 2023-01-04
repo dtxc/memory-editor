@@ -57,7 +57,7 @@ def get_regions(pid : int):
                 off[0] = "0x" + off[0].upper() # add 0x to addresses
                 off[1] = "0x" + off[1].upper()
                 off = '-'.join(off)
-                size = int(off.split("-")[1], 16) - int(off.split("-")[0], 16) # region end - region start
+                size = int(off.split("-")[1], 16) - int(off.split("-")[0], 16) # size = region end - region start
                 try:
                     _type = t[5] # most likely heap or stack
                     if "/usr/bin" in _type: # executable region (code)
@@ -67,7 +67,7 @@ def get_regions(pid : int):
                     if _type == "[stack]":
                         _type = "stack"
                 except IndexError:
-                    _type = "unknown" # other region (still needed)
+                    _type = "unknown" # unkown region type
                 
                 ret[off] = {"size": size, "type": _type}
                 
