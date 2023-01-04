@@ -212,7 +212,7 @@ def print_regions():
         to_print += f"{i}: {regions[i]['size']}" # offset: size
         to_print += ' ' * (10 - len(str(regions[i]["size"]))) # spaces needed
         to_print += regions[i]["type"] # region type
-        to_print += ' ' * (10 - len(regions[i]["type"])) # spaces neede
+        to_print += ' ' * (10 - len(regions[i]["type"])) # spaces needed
         to_print += "rw-" # access
         print(to_print)
 
