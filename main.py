@@ -169,15 +169,12 @@ def mem_refine(pid : int, search):
     mmap = {}
 
     for i in list(mmap_bak.keys()):
-        with open(f"/proc/{pid}/mem") as f:
+        with open(f"/proc/{pid}/mem", "rb") as f:
             f.seek(int(i, 16))
             if settings["dtype"] == "int":
                 s = bytearray(int(search).to_bytes(settings["int_width"], LITTLE_ENDIAN))
-                try:
-                    if s == bytearray(f.read(settings["int_width"])):
-                        mmap[i] = search
-                except ValueError:
-                    pass
+                if s == bytearray(f.read(settings["int_width"])):
+                    mmap[i] = search
 
     return mmap
 
@@ -342,6 +339,10 @@ if os.geteuid() == 0: # if effective user id is zero (running as root)
                         print("Invalid region")
             else:
                 print("deselect: deselects a memory region\nusage: deselect <region index>")
+
+        # clears current matches map
+        elif argv[0] == "clear":
+            mmap = {}
 
         elif argv[0] == "exit" or argv[0] == "quit":
             sys.exit()
